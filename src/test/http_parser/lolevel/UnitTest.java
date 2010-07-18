@@ -8,6 +8,8 @@ public class UnitTest {
 	static void p(Object o) {System.out.println(o);}
 
   public static void testErrorFormat() {
+
+    // "test error" 
     String bla = "This has an error in position 10 (the n in 'an')";
     ByteBuffer buf = ByteBuffer.wrap(bla.getBytes());
                buf.position(10); 
@@ -16,40 +18,42 @@ public class UnitTest {
 "This has an error in position 10 (the n in 'an')\n" +
 "..........^";
 
-    check_equals(mes, Util.error ("test error", buf, 0)); 
+    check_equals(mes, Util.prettyPrintErrorCtx (buf, 0).toString()); 
    
-    
+    // "test trim right and left" 
     bla = "123456789A123456789B123456789C123456789D123456789E123456789F123456789G123456789H123456789I123456789J";
     buf = ByteBuffer.wrap(bla.getBytes());
     buf.position(50);
     mes = 
 "56789B123456789C123456789D123456789E123456789F123456789G123456789H123456\n"+
 "....................................^";
-    check_equals(mes, Util.error("test trim right and left", buf, 0));
+    check_equals(mes, Util.prettyPrintErrorCtx(buf, 0).toString());
 
 
+    // "test trim right"
     buf.position(5);
     mes =
 "123456789A123456789B123456789C123456789D123456789E123456789F123456789G12\n"+
 ".....^";
-    check_equals(mes, Util.error("test trim right", buf, 0));
+    check_equals(mes, Util.prettyPrintErrorCtx(buf, 0).toString());
    
 
+    // "all before, not enough after"
     int limit = buf.limit();
     buf.limit(10);
     mes = 
 "123456789A\n"+
 ".....^";
-    check_equals(mes,  Util.error("all before, not enough after", buf, 0));
+    check_equals(mes,  Util.prettyPrintErrorCtx(buf, 0).toString());
         
 
-
+    // "test trim left" 
     buf.limit(limit);
     buf.position(90);  
     mes = 
 "9C123456789D123456789E123456789F123456789G123456789H123456789I123456789J\n"+
 "..............................................................^";
-    check_equals(mes, Util.error("test trim left", buf, 10));       
+    check_equals(mes, Util.prettyPrintErrorCtx(buf, 10).toString());       
   }
 
 

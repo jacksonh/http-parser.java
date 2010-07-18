@@ -31,7 +31,7 @@ public class Util {
 
   }
 
-  public static String error (String mes, ByteBuffer b, int begining) {
+  public static StringBuilder prettyPrintErrorCtx (ByteBuffer b, int begining) {
       // the error message should look like this:
       //
       // Bla expected something, but it's not there (mes)
@@ -106,7 +106,7 @@ public class Util {
 
 
       b.position(p); // restore position
-      return builder.toString();
+      return builder;
 
   }
 }
