@@ -1,4 +1,5 @@
 hi level callback interface 
+  - find nice names/package structur than `lolevel`
 eventloop
 state() as a function (?)
   - perhaps, the idea being to be able to log/debug better...
